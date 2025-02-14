@@ -12,50 +12,30 @@ cgroups allow you to limit and allocate resources (CPU, memory, disk I/O) for pr
 Step 1: Enable cgroups (if not enabled)
 Check if cgroups are mounted:
 
-bash
-Copy
-Edit
 mount | grep cgroup
 If not, manually mount them:
 
-bash
-Copy
-Edit
 mkdir -p /sys/fs/cgroup/cpu /sys/fs/cgroup/memory
 mount -t cgroup -o cpu none /sys/fs/cgroup/cpu
 mount -t cgroup -o memory none /sys/fs/cgroup/memory
 Step 2: Create a cgroup
-bash
-Copy
-Edit
+
 mkdir /sys/fs/cgroup/cpu/mygroup
 mkdir /sys/fs/cgroup/memory/mygroup
 Step 3: Assign CPU limits
 Limit CPU usage to 50%:
 
-bash
-Copy
-Edit
 echo 50000 > /sys/fs/cgroup/cpu/mygroup/cpu.cfs_quota_us
 echo 100000 > /sys/fs/cgroup/cpu/mygroup/cpu.cfs_period_us
 Step 4: Assign Memory limits
 Limit memory usage to 256MB:
 
-bash
-Copy
-Edit
 echo 268435456 > /sys/fs/cgroup/memory/mygroup/memory.limit_in_bytes
 Step 5: Add a process to the cgroup
 Find the PID of a process:
 
-bash
-Copy
-Edit
 ps aux | grep myprocess
 Add it to the cgroup:
 
-bash
-Copy
-Edit
 echo <PID> > /sys/fs/cgroup/cpu/mygroup/cgroup.procs
 
